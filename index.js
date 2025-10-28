@@ -15,11 +15,11 @@ app.use('/api/food',Router);
 app.use('/images',express.static('uploads'));
 app.use('/api/user',userrouter);
 app.use("/api/cart", cartRouter);
-
-app.get('/',(req,res)=>{
+const PORT = process.env.PORT || 4000;
+app.get(PORT,(req,res)=>{
 
 });
 
-app.listen(4000,()=>{
+app.listen(3000,()=>{
 console.log('Server is working');
 });
