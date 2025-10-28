@@ -16,10 +16,8 @@ app.use('/images',express.static('uploads'));
 app.use('/api/user',userrouter);
 app.use("/api/cart", cartRouter);
 const PORT = process.env.PORT || 4000;
-app.get(PORT,(req,res)=>{
 
-});
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
 console.log('Server is working');
 });
