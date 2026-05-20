@@ -7,10 +7,15 @@ try {
     let cartdata=(userdata[0].cart);
 if(!cartdata[req.body.itemid])
 {
-    cartdata[req.body.itemid]=1;
+    console.log(req.body)
+    cartdata[req.body.itemid]={
+        quantity:1,
+        price:req.body.price,
+        name:req.body.name
+    }
 }
 else
-    cartdata[req.body.itemid]+=1;
+    cartdata[req.body.itemid].quantity+=1;
 await sql `update usertable set cart=${JSON.stringify(cartdata)} where id=${req.body.userid}` 
 return res.json({success:true,message:"Item add to cart"});
 } catch (error) {
@@ -25,7 +30,7 @@ try {
           await sql`select * from usertable where id=${req.body.userid}`;
         let cartdata = userdata[0].cart;
         if(cartdata[req.body.itemid]>0)
-            cartdata[req.body.itemid]--;
+            cartdata[req.body.itemid].quantity--;
         await sql`update usertable set cart=${JSON.stringify(
           cartdata
         )} where id=${req.body.userid}`; 
@@ -40,7 +45,7 @@ const getcart = async (req, res) => {
 try {
     let userdata =
       await sql`select * from usertable where id=${req.body.userid}`;
-        let cartdata = userdata[0].cart;
+        let cartdata = userdata[0]?.cart;
         res.json({success:true,cartdata:cartdata});
 } catch (error) {
     console.log(error);
