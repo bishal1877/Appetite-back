@@ -78,9 +78,8 @@ amount:key.amount_total/100
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const YOUR_DOMAIN = "http://localhost:5173";
-const endpointSecret =
-  "whsec_a20dd13a46d31221de44329065fd8b291949fcd3005238e60b87c533978cb6b1";
+const YOUR_DOMAIN = process.env.FRONT_URL;
+const endpointSecret =process.env.END;
 app.post(
   "/create-checkout-session",
   body("email").isEmail(),
@@ -165,7 +164,7 @@ app.use('/api/food',Router);
 app.use('/images',express.static('uploads'));
 app.use('/api/user',userrouter);
 app.use("/api/cart", cartRouter);
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 
 app.listen(PORT,()=>{
