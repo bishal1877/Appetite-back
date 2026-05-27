@@ -41,4 +41,14 @@ res.json({success:false,message:"error"});
 }
 }
 
-export {listfood,addFood,removefood};
+const ordereditems=async (req,res)=>{
+    try {
+            const email=await sql `select email from usertable where id=${req.userid} `;
+            const ordereditem=await sql `select items,status from ordertable where email=${email[0].email}`
+            res.status(200).json({success:true,items:ordereditem[0]})
+    } catch (error) {
+        res.json({success:false,msg:error.message});
+    }
+}
+
+export {listfood,addFood,removefood,ordereditems};

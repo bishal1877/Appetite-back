@@ -58,3 +58,16 @@ console.log(newuser[0].id);
     res.json({success:false,message:error.message})
 }
 }
+
+
+export const getemail=async (req,res)=>{
+    try {
+          console.log("second",req.userid);
+    const email=await sql `select email from usertable where id=${req.userid} `
+              return res.json({success:true,email})
+    } catch (error) {
+          return res.json({success:false,msg:error.message})
+    }    
+
+
+}

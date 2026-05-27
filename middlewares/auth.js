@@ -9,7 +9,7 @@ if(!token)
 }
 try {
     const td=jwt.verify(token,process.env.SECRET);
-    req.body.userid=td.id;
+    req.userid=td.id;
     next();
 } catch (error) {
     console.log(error);
