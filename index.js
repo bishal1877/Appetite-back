@@ -7,7 +7,6 @@ import cartRouter from "./routes/Cartroute.js";
 import stripe from 'stripe';
 import sql from "./config/db.js";
 import { body, validationResult } from "express-validator";
-
 const app=express();
 app.use(
   cors({
