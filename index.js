@@ -167,6 +167,6 @@ app.use('/images',express.static('uploads'));
 app.use('/api/user',userrouter);
 app.use("/api/cart", cartRouter);
 
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
 console.log('Server is working');
 });
