@@ -115,4 +115,22 @@ const errors=result.errors;
   }
 
 
-   export {webhook,checkout};
+  const sessionstatus = async (req, res) => {
+    const session = await stripes.checkout.sessions.retrieve(
+      req.query.session_id,
+      { expand: ["payment_intent", "subscription"] },
+    );
+    const lineItems = await stripes.checkout.sessions.listLineItems(session.id);
+    res.send({
+      status: session.status,
+      payment_status: session.payment_status,
+      payment_intent_id: session.payment_intent?.id,
+      payment_intent_status: session.payment_intent?.status,
+      subscription_id: session.payment_intent ? null : session.subscription?.id,
+      subscription_status: session.payment_intent
+        ? null
+        : session.subscription?.status,
+    });
+  };
+
+   export {webhook,checkout,sessionstatus};

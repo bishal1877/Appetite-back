@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import cartRouter from "./routes/Cartroute.js";
 import sql from "./config/db.js";
 import { body, validationResult } from "express-validator";
-import { webhook ,checkout} from "./controllers/Paymentcontrol.js";
+import { webhook ,checkout,sessionstatus} from "./controllers/Paymentcontrol.js";
 
 const app=express();
 
@@ -37,25 +37,7 @@ app.post(
 );
 
 
-app.get("/session-status", async (req, res) => {
-  const session = await stripes.checkout.sessions.retrieve(
-    req.query.session_id,
-    { expand: ["payment_intent", "subscription"] },
-  );
-  const lineItems = await stripes.checkout.sessions.listLineItems(
- session.id,
-  );
-  res.send({
-    status: session.status,
-    payment_status: session.payment_status,
-    payment_intent_id: session.payment_intent?.id,
-    payment_intent_status: session.payment_intent?.status,
-    subscription_id: session.payment_intent ? null : session.subscription?.id,
-    subscription_status: session.payment_intent
-      ? null
-      : session.subscription?.status,
-  });
-});
+app.get("/session-status", sessionstatus);
 
 app.use('/api/food',Router);
 app.use('/images',express.static('uploads'));
